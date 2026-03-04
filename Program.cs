@@ -9,11 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));  //1ST PART
+
+builder.Services.AddDistributedMemoryCache(); //1ST PART
+builder.Services.AddSession(); // 2nd PART
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseSession(); //2ND PART
+// Configure the HTTP request pipeline. 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
